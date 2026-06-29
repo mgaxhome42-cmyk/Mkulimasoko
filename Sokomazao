@@ -78,10 +78,3 @@
                     <div class="border border-blue-100 bg-blue-50/50 rounded-xl p-3 text-sm">
                         <p class="font-bold">Tani 5 za Viazi</p>
                         <p class="text-xs text-gray-600">Kutoka: Njombe kwenda: Dar es Salaam</p>
-                        <span class="inline-block bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full mt-2 font-bold">Tafuta Kazi</span>
-                    </div>`;
-            }
-        }
-    </script>
-</body>
-</html>
