@@ -44,13 +44,17 @@
         <button onclick="changePage('transporter')" class="flex flex-col items-center space-y-1 text-blue-600 font-medium">
             <i class="fa-solid fa-truck text-xl"></i>
             <span class="text-xs">Msafirishaji</span>
-        // WEKA FUNGUO ZAKO NDANI YA ALAMA ZA NUKUU "" HAPA CHINI
-const SUPABASE_URL = "https://wlmcdkveocbsumjehtnq.supabase.co";
-const SUPABASE_KEY = "sb_publishable_lfhyHQtJAT7jt8TBJv3wDQ_7FZHgYy3"; 
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        </button>
+    </nav>
 
-async function changePage(role) {
-    const body = document.getElementById('app-body');
+    <script>
+        // WEKA FUNGUO ZAKO NDANI YA ALAMA ZA NUKUU "" HAPA CHINI
+        const SUPABASE_URL = "https://wlmcdkveocbsumjehtnq.supabase.co"; 
+        const SUPABASE_KEY = "sb_publishable_lfhyHQtJAT7jt8TBJv3wDQ_7FZHgYy3";
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        async function changePage(role) {
+            const body = document.getElementById('app-body');
             
             if(role === 'customer') {
                 body.innerHTML = `
