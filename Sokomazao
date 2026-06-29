@@ -50,7 +50,7 @@
     <script>
         // WEKA FUNGUO ZAKO NDANI YA ALAMA ZA NUKUU "" HAPA CHINI
         const SUPABASE_URL = "WEKA_SUPABASE_URL_HAPA"; 
-        const SUPABASE_KEY = "WEKA_SUPABASE_ANON_KEY_HAPA";
+        const SUPABASE_KEY = "https://wlmcdkveocbsumjehtnq.supabase.co/rest/v1/";
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         async function changePage(role) {
