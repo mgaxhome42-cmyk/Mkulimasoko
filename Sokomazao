@@ -69,12 +69,4 @@
                         <div><label class="text-xs font-bold">Aina ya Zao</label><input type="text" class="w-full border rounded-lg p-2 text-sm" placeholder="Mf. Nyanya, Mpunga" required></div>
                         <div><label class="text-xs font-bold">Bei (kwa Kg)</label><input type="number" class="w-full border rounded-lg p-2 text-sm" placeholder="TSH" required></div>
                         <div><label class="text-xs font-bold">Eneo/Mkoa</label><input type="text" class="w-full border rounded-lg p-2 text-sm" placeholder="Mf. Iringa" required></div>
-                        <button type="submit" class="w-full bg-emerald-600 text-white rounded-lg py-2 font-bold text-sm shadow-md mt-2">+ Weka Sokoni</button>
-                    </form>`;
-            } else if(role === 'transporter') {
-                body.innerHTML = `
-                    <h3 class="text-lg font-bold text-blue-600 mb-4"><i class="fa-solid fa-truck"></i> Nafasi za Kusafirisha</h3>
-                    <p class="text-xs text-gray-500 mb-3">Mizigo inayosubiri usafiri:</p>
-                    <div class="border border-blue-100 bg-blue-50/50 rounded-xl p-3 text-sm">
-                        <p class="font-bold">Tani 5 za Viazi</p>
-                        <p class="text-xs text-gray-600">Kutoka: Njombe kwenda: Dar es Salaam</p>
+                        <button type="submit" cla
