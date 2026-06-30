@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="google-site-verification" content="dhfBFe-kZZW_7USV7uHNoMPJfSVevbbdHB81k0z-RGQ" />  <title>Mkulima Soko Tanzania | Shamba Soko Kidijitali</title>
+    <title>Mkulima Soko Tanzania | Shamba Soko Kidijitali</title>
     <meta name="description" content="Soko la kidijitali la mazao nchini Tanzania. Ungana na wakulima, fahamu bei za mazao live.">
+    <!-- Msimbo wa Google Search Console wa Mkuu Martan -->
+    <meta name="google-site-verification" content="dhfBFe-kZZW_7USV7uHNoMPJfSVevbbdHB81k0z-RGQ" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -52,7 +54,7 @@
     </nav>
 
     <script>
-        // Data Store ya Ndani ya Mfumo (Inahifadhi kwenye kivinjari bila kufuta)
+        // Data Store ya Ndani ya Mfumo
         let MAZAO_DATA = JSON.parse(localStorage.getItem('shamba_soko_mazao')) || [
             { id: 1, aina_ya_zao: "Mahindi Ghafi", bei: 850, eneo: "Iringa", kiasi: "Mifuko 50" },
             { id: 2, aina_ya_zao: "Mpunga wa Kyela", bei: 1300, eneo: "Mbeya", kiasi: "Tani 3" }
