@@ -7,10 +7,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="bg-gray-50 text-gray-900 pb-24 font-sans selection:bg-emerald-500 selection:text-white">
 
+    <!-- Rangi za Bendera ya Tanzania Juu -->
     <div class="fixed top-0 left-0 right-0 h-1 flex z-50">
         <div class="flex-1 bg-emerald-600"></div>
         <div class="flex-1 bg-yellow-400"></div>
@@ -18,6 +18,7 @@
         <div class="flex-1 bg-black"></div>
     </div>
 
+    <!-- Sehemu ya Juu (Header) -->
     <header class="bg-white border-b border-gray-100 py-4 px-4 sticky top-0 z-30 shadow-sm">
         <div class="max-w-md mx-auto flex justify-between items-center">
           <div>
@@ -28,9 +29,12 @@
         </div>
     </header>
 
+    <!-- Muundo Mkuu wa Kurasa -->
     <main class="max-w-md mx-auto p-4" id="app-content">
-        </main>
+        <!-- Kodi ya kurasa itawekwa hapa na JavaScript -->
+    </main>
 
+    <!-- Navigation ya Chini ya Simu -->
     <nav class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-100 py-2.5 flex justify-around shadow-xl z-40">
         <button onclick="switchTab('soko')" id="nav-soko" class="flex flex-col items-center gap-1 text-emerald-600 font-bold">
           <i data-lucide="shopping-bag" class="w-5 h-5"></i>
@@ -47,17 +51,14 @@
     </nav>
 
     <script>
-        // === 🔑 SEHEMU YA UNGUNISHAJI WA DATABASE YA SUPABASE ===
-        const SUPABASE_URL = "https://hfpwzeltyfrnoyebstxr.supabase.co"; 
-        const SUPABASE_KEY = "sb_publishable_AN3EuZhIy9CHZMo-0EAzRw_oPR26GgT";
-        
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        // Config za Supabase zilizonyooka
+        const API_URL = "https://hfpwzeltyfrnoyebstxr.supabase.co/rest/v1/mazao"; 
+        const API_KEY = "sb_publishable_AN3EuZhIy9CHZMo-0EAzRw_oPR26GgT";
 
         // Kazi ya kubadilisha Kurasa (Tabs)
         async function switchTab(tabName) {
             const content = document.getElementById('app-content');
             
-            // Rekebisha rangi za menu ya chini
             ['soko', 'mkulima', 'usafiri'].forEach(t => {
                 const btn = document.getElementById(`nav-${t}`);
                 btn.className = t === tabName 
@@ -69,29 +70,37 @@
                 content.innerHTML = `
                     <div class="space-y-4">
                         <h2 class="text-lg font-bold flex items-center gap-2 text-amber-600"><i data-lucide="shopping-bag"></i> Sehemu ya Manunuzi</h2>
-                        <div id="loading-text" class="text-xs text-gray-400 text-center py-4">Inapakia mazao ya soko halisi kutoka kwenye Database...</div>
+                        <div id="loading-text" class="text-xs text-gray-400 text-center py-4">Inapakia mazao kutoka kwenye Database Halisi...</div>
                         <div class="grid gap-3" id="soko-list"></div>
                     </div>`;
                 
                 const list = document.getElementById('soko-list');
                 
                 try {
-                    // Inasoma data kutoka kwenye jedwali la 'mazao' uliyotengeneza Supabase
-                    const { data, error } = await supabaseClient.from('mazao').select('*').order('created_at', { ascending: false });
-                    
+                    // Kuvuta data moja kwa moja kwa kutumia Fetch API na Headers sahihi
+                    const response = await fetch(API_URL + "?select=*", {
+                        method: "GET",
+                        headers: {
+                            "apikey": API_KEY,
+                            "Authorization": `Bearer ${API_KEY}`,
+                            "Content-Type": "application/json"
+                        }
+                    });
+
+                    const data = await response.json();
                     document.getElementById('loading-text').style.display = 'none';
-                    
-                    if (error) {
-                        list.innerHTML = `<div class="text-red-500 text-xs p-4">Kuna shida ya kusoma database: ${error.message}</div>`;
+
+                    if (!response.ok) {
+                        list.innerHTML = `<div class="text-red-500 text-xs p-4 text-center bg-red-50 rounded-xl">Shida ya Database: ${data.message || 'Mawasiliano yamefeli'}</div>`;
                         return;
                     }
 
-                    if (!data || data.length === 0) {
+                    if (data.length === 0) {
                         list.innerHTML = `
                             <div class="text-center py-8 bg-white rounded-2xl border border-gray-100 p-4">
                                 <i data-lucide="info" class="w-8 h-8 text-gray-300 mx-auto mb-2"></i>
                                 <p class="text-sm font-bold text-gray-700">Soko lipo wazi!</p>
-                                <p class="text-xs text-gray-400 mt-0.5">Bado hakuna mazao yaliyowekwa kwenye database halisi. Nenda kwenye jopo la Mkulima ili uwe wa kwanza kuweka zao!</p>
+                                <p class="text-xs text-gray-400 mt-0.5">Nenda kwenye jopo la Mkulima ili uwe wa kwanza kuongeza zao live!</p>
                             </div>`;
                         lucide.createIcons();
                         return;
@@ -99,7 +108,7 @@
 
                     data.forEach(z => {
                         list.innerHTML += `
-                            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex justify-between items-center transition-all hover:scale-[1.01]">
+                            <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm flex justify-between items-center">
                                 <div>
                                     <h3 class="font-bold text-gray-900 text-base">${z.aina_ya_zao}</h3>
                                     <p class="text-xs text-gray-500 flex items-center gap-1 mt-1">
@@ -113,9 +122,8 @@
                     });
 
                 } catch (e) { 
-                    document.getElementById('loading-text').innerText = "Imeshindikana kuunganisha mitandao.";
+                    document.getElementById('loading-text').innerHTML = `<div class="text-red-500 text-xs p-4 text-center">Imeshindikana kuunganisha mitandao.</div>`;
                 }
-                
                 lucide.createIcons();
             } 
             
@@ -131,8 +139,8 @@
                                 <div><label class="text-[11px] font-bold text-gray-500">Bei (kwa Kg)</label><input type="number" id="input-bei" class="w-full border border-gray-200 rounded-xl p-2.5 text-sm focus:outline-emerald-500" placeholder="TSH" required></div>
                                 <div><label class="text-[11px] font-bold text-gray-500">Kiasi</label><input type="text" id="input-kiasi" class="w-full border border-gray-200 rounded-xl p-2.5 text-sm focus:outline-emerald-500" placeholder="Mf. Mifuko 10" required></div>
                             </div>
-                            <div><label class="text-[11px] font-bold text-gray-500">Mkoa / Eneo uliopo</label><input type="text" id="input-eneo" class="w-full border border-gray-200 rounded-xl p-2.5 text-sm focus:outline-emerald-500" placeholder="Mf. Iringa, Mbeya, Arusha" required></div>
-                            <button type="submit" id="submitBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl py-3 font-bold text-sm shadow-md mt-2 transition-all">+ Tuma Sokoni Live</button>
+                            <div><label class="text-[11px] font-bold text-gray-500">Mkoa / Eneo uliopo</label><input type="text" id="input-eneo" class="w-full border border-gray-200 rounded-xl p-2.5 text-sm focus:outline-emerald-500" placeholder="Mf. Iringa, Mbeya" required></div>
+                            <button type="submit" id="submitBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl py-3 font-bold text-sm shadow-md mt-2">+ Tuma Sokoni Live</button>
                         </form>
 
                         <div class="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
@@ -141,7 +149,7 @@
                         </div>
                     </div>`;
 
-                // Washa Fomu ya kutuma data Supabase
+                // Kutuma data moja kwa moja Supabase kwa njia ya POST (Fetch API)
                 document.getElementById('fomu-zao').addEventListener('submit', async function(e) {
                     e.preventDefault();
                     const btn = document.getElementById('submitBtn');
@@ -154,22 +162,32 @@
                     const eneo = document.getElementById('input-eneo').value;
 
                     try {
-                        const { error } = await supabaseClient.from('mazao').insert([{ aina_ya_zao, bei, eneo, kiasi }]);
-                        if (!error) {
-                            alert('Hongera mkuu! Zao lako limeingia kwenye Database na kila mtu analiona sasa hivi!');
+                        const response = await fetch(API_URL, {
+                            method: "POST",
+                            headers: {
+                                "apikey": API_KEY,
+                                "Authorization": `Bearer ${API_KEY}`,
+                                "Content-Type": "application/json",
+                                "Prefer": "return=minimal"
+                            },
+                            body: JSON.stringify({ aina_ya_zao, bei, eneo, kiasi })
+                        });
+
+                        if (response.ok) {
+                            alert('Hongera mkuu! Zao lako limeingia kwenye Database na sasa hivi lipo Live!');
                             switchTab('soko');
                         } else {
-                            alert('Imeshindikana: ' + error.message);
+                            const errData = await response.json();
+                            alert('Imeshindikana kuhifadhi: ' + (errData.message || 'Kosa la mtandao'));
                             btn.innerText = "+ Tuma Sokoni Live";
                             btn.disabled = false;
                         }
                     } catch (err) {
-                        alert('Error: Imefeli kuunganisha mitandao.');
+                        alert('Error: Muunganisho umefeli.');
                         btn.disabled = false;
                     }
                 });
 
-                // Chora Grafu ya Bei
                 const ctx = document.getElementById('grafuBei').getContext('2d');
                 new Chart(ctx, {
                     type: 'bar',
